@@ -1,0 +1,25 @@
+version: '2'
+services:
+  app-web:
+    build: ./web
+    ports:
+      - "8080:8080"
+    depends_on:
+          - nosql-db
+          - app-db
+  nosql-db:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-db-volume:/data/db
+  app-db:
+    build: ./db
+    ports:
+      - "5432:5432"
+    volumes:
+     - postgres-db-volume:/var/lib/postgresql/data
+
+volumes:
+  postgres-db-volume:
+  mongo-db-volume:
